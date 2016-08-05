@@ -5,6 +5,23 @@ class Device(object):
     def __init__(self , driver):
         self.driver = driver
 
+
+    def find_element(self, by, locator):
+        try:
+            element = self.driver.find_element(by, locator)
+            return element
+        except:
+            return None
+
+    def find_elements(self, by, locator):
+        elements = []
+        try:
+            elements = self.driver.find_elements(by, locator)
+            return elements
+        except:
+            return elements
+
+
     def swipe(self, startx, starty, endx, endy, duration=.5):
         """
         Swipe across the screen or element.
@@ -187,4 +204,12 @@ class Device(object):
         :Usage:
             driver.get_screenshot_as_file('/Screenshots/foo.png')
         """
-        self.driver.save_screenshot(filename)        
+        self.driver.save_screenshot(filename)
+
+    def lock_device(self, seconds):
+        """Lock the device for a certain period of time. iOS only.
+        :Args:
+         - the duration to lock the device, in seconds
+        """
+
+        self.driver.lock(seconds)

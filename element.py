@@ -7,55 +7,80 @@ class Element(object):
         self.ui_object = ui_object
 
     def location(self):
-        ##Returns the x, y coordinates of the element
+        """
+        :return: x,y coordinates (top-left) of the ui_element
+        """
         return self.ui_object.location
 
     def name(self):
-        ##Returns the displayed name of the element
+        """
+        :return: displayed name of the ui_element
+        """
         return self.ui_object.get_attribute('name')
 
     def tap(self):
+        """
+        Performs tap action on the element
+        """
         self.ui_object.click()
 
 class Button(Element):
     def __init__(self, ui_obj):
         Element.__init__(self, ui_object=ui_obj )
-        self.driver = Mobile.driver
 
     def is_enabled(self):
-        ##Returns boolean whether or not the element is enabled
+        """
+        :return: boolean whether or not the element is enabled
+        """
         return self.ui_object.is_enabled()
 
 class Picker(Element):
     def __init__(self, ui_obj):
         Element.__init__(self, ui_object=ui_obj)
-        self.driver = Mobile.driver
 
-    def currentValue(self):
+
+    def current_value(self):
+        """
+        :return: currently selected value
+        """
         return self.ui_object.get_attribute('value')
 
-    def flickToValue(self, value):
+    def scroll_to_value(self, value):
+        """
+        Scroll the picker to the specified value
+        :param value: one of the available values in the picket
+        """
         self.ui_object.send_keys(value)
-
-    def dismiss(self):
-        self.driver.hide_keyboard()
 
 class Textfield(Element):
     def __init__(self, ui_obj):
         Element.__init__(self, ui_object=ui_obj)
-        self.driver = Mobile.driver
 
-    def displayedText(self):
+
+    def displayed_text(self):
+        """
+        :return: the displayed text or placeholder
+        """
         return self.ui_object.text
 
-    def enterText(self, text):
+    def enter_text(self, text):
+        """
+        Inserts the text into the field
+        :param text: the text that needs to go into the field
+        """
         self.ui_object.send_keys(text)
 
-    def clearText(self):
+    def clear_text(self):
+        """
+        Deletes the current text in the field
+        """
         self.ui_object.clear()
 
         # ## The method below could be applied to iOS app only ##
         # self.driver.find_element_by_xpath('//UIAButton[@name="Clear text"]').click()
 
-    def goToNextField(self):
+    def go_to_next_field(self):
+        """
+        Similar to hitting tab
+        """
         self.ui_object.send_keys('\n')
