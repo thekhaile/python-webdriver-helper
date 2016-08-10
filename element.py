@@ -1,22 +1,27 @@
 __author__ = 'khaile'
 
-
 class Element(object):
 
     def __init__(self, ui_object=None):
         self.ui_object = ui_object
 
-    def location(self):
+    def get_location(self):
         """
         :return: x,y coordinates (top-left) of the ui_element
         """
         return self.ui_object.location
 
-    def name(self):
+    def get_name(self):
         """
         :return: displayed name of the ui_element
         """
         return self.ui_object.get_attribute('name')
+
+    def get_size(self):
+        """
+        :return: size of the ui_element
+        """
+        return self.ui_object.size
 
     def tap(self):
         """
@@ -39,7 +44,7 @@ class Picker(Element):
         Element.__init__(self, ui_object=ui_obj)
 
 
-    def current_value(self):
+    def get_current_value(self):
         """
         :return: currently selected value
         """
@@ -52,12 +57,13 @@ class Picker(Element):
         """
         self.ui_object.send_keys(value)
 
+
 class Textfield(Element):
     def __init__(self, ui_obj):
         Element.__init__(self, ui_object=ui_obj)
 
 
-    def displayed_text(self):
+    def get_displayed_text(self):
         """
         :return: the displayed text or placeholder
         """
