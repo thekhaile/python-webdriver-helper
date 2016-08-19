@@ -2,7 +2,7 @@ __author__ = 'khaile'
 
 
 class Device(object):
-    def __init__(self , driver):
+    def __init__(self , driver=None):
         self.driver = driver
 
 
@@ -156,7 +156,7 @@ class Device(object):
         self.driver.scroll(origin_el, destination_el)
 
 
-    def current_orientation(self):
+    def get_current_orientation(self):
         """
         Returns the current orientation of the device.  Possible values
         are: LANDSCAPE or PORTRAIT.
@@ -213,3 +213,15 @@ class Device(object):
         """
 
         self.driver.lock(seconds)
+
+    def get_window_size(self):
+        """
+        Gets window size.
+        :return: tuple of (height,width)
+        """
+        size=self.driver.get_window_size()
+        self.height=size['height']
+        self.width =size['width']
+
+        return (self.height, self.width)
+
