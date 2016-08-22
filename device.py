@@ -22,7 +22,7 @@ class Device(object):
             return elements
 
 
-    def swipe(self, startx, starty, endx, endy, duration=.5):
+    def swipe(self, startx, starty, endx, endy, duration=None):
         """
         Swipe across the screen or element.
         If phone rotates, x and y rotate with it.
@@ -43,32 +43,32 @@ class Device(object):
 
         self.driver.swipe(startx, starty, endx, endy, duration)
 
-    def swipe_up(self, startx = 0.5, starty = 0.7, endx = 0.5, endy = 0.3, duration = 0.5):
+    def swipe_up(self, startx=0.5, starty=0.7, endx=0.5, endy=0.3, duration=None):
         """
         Pre-defined swipe action starting near the bottom of the screen to the top
         """
         self.driver.swipe(startx, starty, endx, endy, duration)
 
-    def swipe_down(self, startx = 0.5, starty = 0.3, endx = 0.5, endy = 0.7, duration = 0.5):
+    def swipe_down(self, startx=0.5, starty=0.3, endx=0.5, endy=0.7, duration=None):
         """
         Pre-defined swipe action starting from the top of the screen to the bottom
         """
         self.driver.swipe(startx, starty, endx, endy, duration)
 
-    def swipe_left(self, startx = 0.8, starty = 0.5, endx = 0.2, endy = 0.5, duration = 0.5):
+    def swipe_left(self, startx=0.8, starty=0.5, endx=0.2, endy=0.5, duration=None):
         """
         Pre-defined swipe action starting from left to right in the middle of the screen.
         """
         self.driver.swipe(startx, starty, endx, endy, duration)
 
-    def swipe_right(self, startx = 0.2, starty = 0.5, endx = 0.8, endy = 0.5, duration = 0.5):
+    def swipe_right(self, startx=0.2, starty=0.5, endx=0.8, endy=0.5, duration=None):
         """
         Pre-defined swipe action starting from right to left in the middle of the screen.
         """
         self.driver.swipe(startx, starty, endx, endy, duration)
 
 
-    def bezel_swipe_left(self, starty=0.5, endy=0.5):
+    def bezel_swipe_left(self, starty=None, endy=None):
         """
         swipes in from left, halfway down the screen
         optional params: you can include starty to do a straight across swipe at that Y coord
@@ -81,7 +81,7 @@ class Device(object):
 
         self.driver.swipe(0.001, starty, .8, endy)
 
-    def bezel_swipe_right(self, starty=None, endy=None):
+    def bezel_swipe_right(self, starty=0, endy=None):
         """
         swipes in from right, halfway down the screen
         optional params: you can include starty to do a straight across swipe at that Y coord
@@ -120,7 +120,7 @@ class Device(object):
 
         self.driver.swipe(startx, .9999, endx, .2)
 
-    def tap_on_screen(self, *args ):
+    def tap_on_screen(self, *args):
         """
         This method, on the WebDriver object, allows for tapping with multiple fingers, simply by passing in an array of x-y coordinates to tap.
         # set up array of two coordinates
