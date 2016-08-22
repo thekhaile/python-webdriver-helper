@@ -181,7 +181,7 @@ class Device(object):
          - key_name - key to press
          - strategy - strategy for closing the keyboard (e.g., `tapOutside`)
         """
-        self.driver.hide_keyboard(self, key_name, key, strategy)
+        self.driver.hide_keyboard(key_name, key, strategy)
 
     def tap_delete_key(self):
         self.driver.find_element_by_id('delete').click()
