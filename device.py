@@ -163,7 +163,7 @@ class Device(object):
         """
         return self.driver.orientation
 
-    def set_orientation(self, orientation):
+    def __set_orientation(self, orientation):
         """
         Sets the current orientation of the device.
         :param orientation: LANDSCAPE or PORTRAIT.
@@ -172,6 +172,11 @@ class Device(object):
         current = self.driver.orientation
         if (current != orientation):
             self.driver.orientation = orientation
+    def rotate_to_portrait(self):
+        self.__set_orientation('PORTRAIT')
+
+    def rotate_to_landscape(self):
+        self.__set_orientation('LANDSCAPE')
 
     def dismiss_keyboard(self, key_name=None, key=None, strategy=None):
         """
