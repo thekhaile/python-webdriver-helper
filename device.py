@@ -24,7 +24,7 @@ class Device(object):
 
     def is_ios(self):
         """
-        :return: the booleen value of whether we are on an iOS platform
+        :return: the boolean value of whether we are on an iOS platform
         """
         if self.driver.desired_capabilities['platformName'] == 'iOS':
             return True
@@ -33,7 +33,7 @@ class Device(object):
 
     def is_android(self):
         """
-        :return: the booleen value of whether we are on an Android platform
+        :return: the boolean value of whether we are on an Android platform
         """
         if self.driver.desired_capabilities['platformName'] == 'Android':
             return True
