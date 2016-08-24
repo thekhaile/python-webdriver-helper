@@ -1,5 +1,6 @@
 __author__ = 'khaile'
-
+import os
+from time import sleep
 
 class Device(object):
     def __init__(self , driver=None):
@@ -20,6 +21,25 @@ class Device(object):
             return elements
         except:
             return elements
+
+    def is_ios(self):
+        """
+        :return: the booleen value of whether we are on an iOS platform
+        """
+        if self.driver.desired_capabilities['platformName'] == 'iOS':
+            return True
+        else:
+            return False
+
+    def is_android(self):
+        """
+        :return: the booleen value of whether we are on an Android platform
+        """
+        if self.driver.desired_capabilities['platformName'] == 'Android':
+            return True
+        else:
+            return False
+
 
 
     def swipe(self, startx, starty, endx, endy, duration=None):
@@ -189,11 +209,14 @@ class Device(object):
         self.driver.hide_keyboard(key_name, key, strategy)
 
     def tap_delete_key(self):
-        self.driver.find_element_by_id('delete').click()
+        if self.is_ios():
+            self.driver.find_element_by_id('delete').click()
+        else:
+            self.driver.press_keycode(67)
 
     def tap_hardware_back_key(self):
         """
-        Presses on the device's hardware back button
+        Presses on the device's hardware back button Android only.
         """
         self.driver.press_keycode(4)
 
@@ -211,12 +234,17 @@ class Device(object):
         self.driver.save_screenshot(filename)
 
     def lock_device(self, seconds):
-        """Lock the device for a certain period of time. iOS only.
+        """Lock the device for a certain period of time. Android and iOS 8.0 only.
         :Args:
          - the duration to lock the device, in seconds
         """
+        if self.is_ios():
+            self.driver.lock(seconds)
+        else:
+            os.system('adb shell input keyevent 26')
+            sleep(seconds)
+            os.system('adb shell input keyevent 26')
 
-        self.driver.lock(seconds)
 
     def get_window_size(self):
         """
