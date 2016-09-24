@@ -6,18 +6,29 @@ class Device(object):
     def __init__(self , driver=None):
         self.driver = driver
 
+    def find_element(self, strategy, value):
+        """
 
-    def find_element(self, by, locator):
+        :param strategy: method such as ID, Class name, or xpath, etc...
+        :param value: the search value that goes with the strategy
+        :return: a web object
+        """
         try:
-            element = self.driver.find_element(by, locator)
+            element = self.driver.find_element(strategy, value)
             return element
         except:
             return None
 
-    def find_elements(self, by, locator):
+    def find_elements(self, strategy, value):
+        """
+
+        :param strategy: method such as ID, Class name, or xpath, etc...
+        :param value: the search value that goes with the strategy
+        :return: a list of web objects
+        """
         elements = []
         try:
-            elements = self.driver.find_elements(by, locator)
+            elements = self.driver.find_elements(strategy, value)
             return elements
         except:
             return elements
