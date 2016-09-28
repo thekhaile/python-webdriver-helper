@@ -13,17 +13,35 @@ class Element(object):
         """
         return self.ui_object.location
 
+    def get_size(self):
+        """
+        :return: size (x pixels wide, y pixels high) of the ui_element
+        """
+        return self.ui_object.size
+
     def get_name(self):
         """
         :return: displayed name of the ui_element
         """
         return self.ui_object.get_attribute('name')
 
-    def get_size(self):
+    def get_type(self):
         """
-        :return: size of the ui_element
+        :return: 'type' attribute of the ui_element
         """
-        return self.ui_object.size
+        return self.ui_object.get_attribute('type')
+
+    def get_value(self):
+        """
+        :return: 'value' attribute of the ui_element
+        """
+        return self.ui_object.get_attribute('value')
+
+    def get_label(self):
+        """
+        :return: 'label' attribute of the ui_element
+        """
+        return self.ui_object.get_attribute('label')
 
     def tap(self):
         """
