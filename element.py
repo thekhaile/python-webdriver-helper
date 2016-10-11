@@ -2,10 +2,30 @@ __author__ = 'khaile'
 # from device import *
 # from appium.webdriver.common.mobileby import MobileBy
 
+class Type(object):
+    def __init__(self , webdriver=None):
+        self.driver = webdriver
+    def Element(self, ui_obj):
+        return Element(ui_obj, self.drive)
+    def Button(self, ui_obj):
+        return Button(ui_obj, self.driver)
+    def Picker(self, ui_obj):
+        return Picker(ui_obj, self.driver)
+    def TextField(self, ui_obj):
+        return Textfield(ui_obj, self.driver)
+    def CheckBox(self, ui_obj):
+        return CheckBox(ui_obj, self.driver)
+    def Switch(self, ui_obj):
+        return Switch(ui_obj, self.driver)
+    def RadioButton(self, ui_obj):
+        return RadioButton(ui_obj, self.driver)
+
+
 class Element(object):
 
-    def __init__(self, ui_object=None):
+    def __init__(self, ui_object=None, driver =None):
         self.ui_object = ui_object
+        self.driver = driver
 
     def get_location(self):
         """
@@ -50,8 +70,8 @@ class Element(object):
         self.ui_object.click()
 
 class Button(Element):
-    def __init__(self, ui_obj):
-        Element.__init__(self, ui_object=ui_obj )
+    def __init__(self, ui_obj, webdriver):
+        Element.__init__(self, ui_object=ui_obj, driver=webdriver)
 
     def is_enabled(self):
         """
@@ -60,8 +80,8 @@ class Button(Element):
         return self.ui_object.is_enabled()
 
 class Picker(Element):
-    def __init__(self, ui_obj):
-        Element.__init__(self, ui_object=ui_obj)
+    def __init__(self, ui_obj, webdriver):
+        Element.__init__(self, ui_object=ui_obj, driver=webdriver)
 
 
     def get_current_value(self):
@@ -103,8 +123,8 @@ class Picker(Element):
         #                 raise
 
 class Textfield(Element):
-    def __init__(self, ui_obj):
-        Element.__init__(self, ui_object=ui_obj)
+    def __init__(self, ui_obj, webdriver):
+        Element.__init__(self, ui_object=ui_obj, driver=webdriver)
 
 
     def get_displayed_text(self):
@@ -139,8 +159,8 @@ class CheckBox(Element):
     """
     Tested on Android
     """
-    def __init__(self, ui_obj):
-        Element.__init__(self, ui_object=ui_obj)
+    def __init__(self, ui_obj, webdriver):
+        Element.__init__(self, ui_object=ui_obj, driver=webdriver)
 
     def is_enabled(self):
         """
@@ -170,8 +190,8 @@ class Switch(Element):
     """
     Tested on Android
     """
-    def __init__(self, ui_obj):
-        Element.__init__(self, ui_object=ui_obj)
+    def __init__(self, ui_obj, webdriver):
+        Element.__init__(self, ui_object=ui_obj, driver=webdriver)
 
     def is_enabled(self):
         """
@@ -192,8 +212,8 @@ class RadioButton(Element):
     """
     Tested on Android
     """
-    def __init__(self, ui_obj):
-        Element.__init__(self, ui_object=ui_obj)
+    def __init__(self, ui_obj, webdriver):
+        Element.__init__(self, ui_object=ui_obj, driver=webdriver)
 
     def is_enabled(self):
         """
