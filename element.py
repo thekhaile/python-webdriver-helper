@@ -3,21 +3,63 @@ __author__ = 'khaile'
 # from appium.webdriver.common.mobileby import MobileBy
 
 class Type(object):
+    """
+    This class is mainly used as a middle man to provide auto-complete for UIType suggestion and
+    return the selected class and pass on the webdriver to the individual classes.
+    """
     def __init__(self , webdriver=None):
+        """
+        :param webdriver: the appium webdriver
+        """
         self.driver = webdriver
+
     def Element(self, ui_obj):
+        """
+        :param ui_obj: the element object on which actions are being applied
+        :return: the Element class
+        """
         return Element(ui_obj, self.drive)
+
     def Button(self, ui_obj):
+        """
+        :param ui_obj: the element object on which actions are being applied
+        :return: the Button class
+        """
         return Button(ui_obj, self.driver)
+
     def Picker(self, ui_obj):
+        """
+        :param ui_obj: the element object on which actions are being applied
+        :return: the Picker class
+        """
         return Picker(ui_obj, self.driver)
+
     def TextField(self, ui_obj):
+        """
+        :param ui_obj: the element object on which actions are being applied
+        :return: the TextField class
+        """
         return Textfield(ui_obj, self.driver)
+
     def CheckBox(self, ui_obj):
+        """
+        :param ui_obj: the element object on which actions are being applied
+        :return: the CheckBox class
+        """
         return CheckBox(ui_obj, self.driver)
+
     def Switch(self, ui_obj):
+        """
+        :param ui_obj: the element object on which actions are being applied
+        :return: the Switch class
+        """
         return Switch(ui_obj, self.driver)
+
     def RadioButton(self, ui_obj):
+        """
+        :param ui_obj: the element object on which actions are being applied
+        :return: the RadioButton class
+        """
         return RadioButton(ui_obj, self.driver)
 
 
