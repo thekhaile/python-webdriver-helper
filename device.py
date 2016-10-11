@@ -268,3 +268,18 @@ class Device(object):
 
         return (self.height, self.width)
 
+    def switch_to_native(self):
+        for context in self.driver.contexts:
+            if (context.lower().find("native") > -1):
+                self.driver.switch_to.context(context)
+                return
+
+        raise RuntimeError('Could not find the native app to switch to.  Aborting.')
+
+    def switch_to_webview(self):
+        for context in self.driver.contexts:
+            if (context.lower().find("web") > -1):
+                self.driver.switch_to.context(context)
+                return
+
+        raise RuntimeError('Could not find a webview to switch to.  Aborting.')
