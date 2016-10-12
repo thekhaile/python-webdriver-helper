@@ -18,7 +18,7 @@ class Type(object):
         :param ui_obj: the element object on which actions are being applied
         :return: the Element class
         """
-        return Element(ui_obj, self.drive)
+        return Element(ui_object=ui_obj, driver= self.driver)
 
     def Button(self, ui_obj):
         """
