@@ -27,7 +27,7 @@ class Verify(unittest.TestCase):
     def didPass(self):
         self.assertLessEqual(self.failureCount, 0, 'There are failed verifications')
 
-    def verifyIsNotNone(self, obj, msg=None):
+    def verifyExists(self, obj, msg=None):
         """
         :param obj: object in need of verification
         :param msg: message when the verification fails
@@ -42,7 +42,7 @@ class Verify(unittest.TestCase):
             return False
 
 
-    def verifyIsNone(self, obj, msg=None):
+    def verifyNotExists(self, obj, msg=None):
         """
         :param obj: object in need of verification
         :param msg: message when the verification fails
@@ -147,6 +147,36 @@ class Verify(unittest.TestCase):
         """
         try:
             self.assertLessEqual(first, second, msg=None)
+            return True
+
+        except:
+            self.printFailMessage(msg)
+            return False
+
+    def verifyTrue(self, expr, msg=None):
+        """
+        evaluate if the express/value has True condition
+        :param expr: expression or value
+        :param msg: message when the verification fails
+        :return: boolean
+        """
+        try:
+            self.assertTrue(expr, msg=None)
+            return True
+
+        except:
+            self.printFailMessage(msg)
+            return False
+
+    def verifyFalse(self, expr, msg=None):
+        """
+        evaluate if the express/value has False condition
+        :param expr: expression or value
+        :param msg: message when the verification fails
+        :return: boolean
+        """
+        try:
+            self.assertFalse(expr, msg=None)
             return True
 
         except:
