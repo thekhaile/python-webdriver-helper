@@ -1,5 +1,5 @@
 __author__ = 'khaile'
-# from device import *
+from device import *
 # from appium.webdriver.common.mobileby import MobileBy
 
 class Type(object):
@@ -39,7 +39,7 @@ class Type(object):
         :param ui_obj: the element object on which actions are being applied
         :return: the TextField class
         """
-        return Textfield(ui_obj, self.driver)
+        return TextField(ui_obj, self.driver)
 
     def CheckBox(self, ui_obj):
         """
@@ -64,7 +64,9 @@ class Type(object):
 
 
 class Element(object):
-
+    """
+    This class is the base class for all UI Elements and has basic methods shared across UI Types
+    """
     def __init__(self, ui_object=None, driver =None):
         self.ui_object = ui_object
         self.driver = driver
@@ -112,6 +114,10 @@ class Element(object):
         self.ui_object.click()
 
 class Button(Element):
+    """
+    This class is for the UI Element whose type is UIAButton for iOS and
+    android.widget.Button for Android
+    """
     def __init__(self, ui_obj, webdriver):
         Element.__init__(self, ui_object=ui_obj, driver=webdriver)
 
@@ -164,7 +170,11 @@ class Picker(Element):
         #             if textView.text != value:
         #                 raise
 
-class Textfield(Element):
+class TextField(Element):
+    """
+    This class is for the UI Element whose type is UIATextField or UIASecureField for iOS and android.widget.EditText
+    for Android
+    """
     def __init__(self, ui_obj, webdriver):
         Element.__init__(self, ui_object=ui_obj, driver=webdriver)
 
@@ -231,6 +241,8 @@ class CheckBox(Element):
 class Switch(Element):
     """
     Tested on Android
+    This class is for the UI Element whose type is UIASwitch for iOS and
+    android.widget.Switch for Android
     """
     def __init__(self, ui_obj, webdriver):
         Element.__init__(self, ui_object=ui_obj, driver=webdriver)
@@ -239,13 +251,20 @@ class Switch(Element):
         """
         :return: boolean whether or not the element is enabled
         """
+
         return self.ui_object.is_enabled()
 
     def is_on(self):
         """
         :return: boolean whether or not the checkbox is checked
         """
-        return self.ui_object.get_attribute('checked')
+        if Device(self.driver).is_ios():
+            if self.ui_object.get_attribute('value') == 1:
+                return True
+            else:
+                return False
+        else:
+            return self.ui_object.get_attribute('checked')
 
     def toggle(self):
         self.ui_object.click()
@@ -268,3 +287,7 @@ class RadioButton(Element):
         :return: boolean whether or not the checkbox is checked
         """
         return self.ui_object.get_attribute('checked')
+
+class Cell(Element):
+     def __init__(self, ui_obj, webdriver):
+        Element.__init__(self, ui_object=ui_obj, driver=webdriver)
