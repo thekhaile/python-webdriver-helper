@@ -1,6 +1,7 @@
 __author__ = 'khaile'
 from device import *
 # from appium.webdriver.common.mobileby import MobileBy
+from appium.webdriver.common.touch_action import TouchAction
 
 class Type(object):
     """
@@ -70,6 +71,7 @@ class Element(object):
     def __init__(self, ui_object=None, driver =None):
         self.ui_object = ui_object
         self.driver = driver
+        self.action = TouchAction(self.driver)
 
     def get_location(self):
         """
@@ -112,6 +114,31 @@ class Element(object):
         Performs tap action on the element
         """
         self.ui_object.click()
+
+    def tap_hybrid(self):
+        """
+        Performs tap action on the element for hybrid apps
+        """
+        location = self.ui_object.location
+        size = self.ui_object.size
+        # offsetting location so that the element can be tapped
+        location['x'] = location['x'] + size['width']/2
+        location['y'] = location['y'] + size['height']/2
+        if location['x'] < 0 or location < 0:
+            return
+        else:
+            self.driver.execute_script('mobile: tap', location)
+
+    def long_press(self):
+        """
+        performs long press action at the center of the element
+        """
+        coordinates = self.get_location()
+        size = self.get_size()
+        coordinates['x'] = coordinates['x']+ size['width']/2
+        coordinates['y'] = coordinates['y']+ size['height']/2
+
+        self.long_press(x=coordinates['x'], y=coordinates['y']).perform()
 
 class Button(Element):
     """
