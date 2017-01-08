@@ -46,12 +46,26 @@ class Device(object):
         """
         :return: the boolean value of whether we are on an Android platform
         """
-        if self.driver.desired_capabilities['platformName'] == 'Android':
-            return True
+        if self.is_mobile_web():
+            if self.driver.desired_capabilities['platform'] == 'Android':
+                return True
+            else:
+                return False
         else:
+            if self.driver.desired_capabilities['platformName'] == 'Android':
+                return True
+            else:
+                return False
+
+    def is_mobile_web(self):
+        """
+        :return: boolean value of the current automated target is a native app.
+        False will be returned if it is a mobile web for example.
+        """
+        if self.driver.desired_capabilities.has_key('app'):
             return False
-
-
+        else:
+            return True
 
     def swipe(self, startx, starty, endx, endy, duration=None):
         """
