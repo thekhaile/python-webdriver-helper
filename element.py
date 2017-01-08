@@ -1,6 +1,6 @@
 __author__ = 'khaile'
 from device import *
-# from appium.webdriver.common.mobileby import MobileBy
+from appium.webdriver.common.mobileby import MobileBy
 from appium.webdriver.common.touch_action import TouchAction
 
 class Type(object):
@@ -72,6 +72,7 @@ class Element(object):
         self.ui_object = ui_object
         self.driver = driver
         self.action = TouchAction(self.driver)
+        self.device = Device(self.driver)
 
     def get_location(self):
         """
@@ -121,11 +122,25 @@ class Element(object):
         """
         location = self.ui_object.location
         size = self.ui_object.size
-        # offsetting location so that the element can be tapped
-        location['x'] = location['x'] + size['width']/2
-        location['y'] = location['y'] + size['height']/2
+
+        # Determine if we need to take into account the browser header of mobile web
+        if self.device.is_mobile_web():
+            self.device.switch_to_native()
+            if self.device.is_ios():
+                webView = self.driver.find_element(MobileBy.CLASS_NAME, 'UIAWebView')
+                webViewLocation = webView.location
+            else:
+                webView = self.driver.find_element(MobileBy.CLASS_NAME, 'android.webkit.WebView')
+                webViewLocation = webView.location
+            location['y'] = webViewLocation['y'] + location['y'] + size['height']/2
+            location['x'] = webViewLocation['x'] + location['x'] + size['width']/2
+            self.device.switch_to_webview()
+        else:
+            #This is simply native app wrapper
+            location['x'] = location['x'] + size['width']/2
+            location['y'] = location['y'] + size['height']/2
         if location['x'] < 0 or location < 0:
-            return
+            print 'Either x or y coordinate is negative'
         else:
             self.driver.execute_script('mobile: tap', location)
 
