@@ -127,19 +127,22 @@ class Element(object):
         if self.device.is_mobile_web():
             self.device.switch_to_native()
             if self.device.is_ios():
-                webView = self.driver.find_element(MobileBy.CLASS_NAME, 'UIAWebView')
-                webViewLocation = webView.location
+                #Assuming this is a placeholder for the URL Header Bar on iOS
+                urlHeaderBar = self.driver.find_element(MobileBy.CLASS_NAME, 'UIAButton')
+                urlHeaderBarSize = urlHeaderBar.size
+                location['y'] = urlHeaderBarSize['height'] + location['y'] + size['height']/2
+                location['x'] = location['x'] + size['width']/2
             else:
                 webView = self.driver.find_element(MobileBy.CLASS_NAME, 'android.webkit.WebView')
                 webViewLocation = webView.location
-            location['y'] = webViewLocation['y'] + location['y'] + size['height']/2
-            location['x'] = webViewLocation['x'] + location['x'] + size['width']/2
+                location['y'] = webViewLocation['y'] + location['y'] + size['height']/2
+                location['x'] = webViewLocation['x'] + location['x'] + size['width']/2
             self.device.switch_to_webview()
         else:
             #This is simply native app wrapper
             location['x'] = location['x'] + size['width']/2
             location['y'] = location['y'] + size['height']/2
-        if location['x'] < 0 or location < 0:
+        if location['x'] < 0 or location['y'] < 0:
             print 'Either x or y coordinate is negative'
         else:
             self.driver.execute_script('mobile: tap', location)
