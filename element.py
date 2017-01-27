@@ -145,7 +145,7 @@ class Element(object):
         if location['x'] < 0 or location['y'] < 0:
             print 'Either x or y coordinate is negative'
         else:
-            self.driver.execute_script('mobile: tap', location)
+           self.action.tap(x=location['x'], y=location['y']).perform()
 
     def long_press(self):
         """
