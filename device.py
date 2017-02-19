@@ -9,7 +9,7 @@ class Device(object):
 
     def quit(self):
         self.driver.quit()
-        
+
     def find_element(self, strategy, value):
         """
 
@@ -325,3 +325,5 @@ class Device(object):
         current_context = self.get_current_context()
         if current_context.lower().find('native') > -1:
             return True
+        else:
+            return False
