@@ -67,7 +67,7 @@ class Device(object):
         else:
             return True
 
-    def swipe(self, startx, starty, endx, endy, duration=500):
+    def swipe(self, startx, starty, deltax, deltay, duration=500):
         """
         Swipe across the screen or element.
         If phone rotates, x and y rotate with it.
@@ -80,90 +80,90 @@ class Device(object):
 
         :param startx: Starting position on the horizontal axis.
         :param starty: Starting position on the vertical axis.
-        :param endx: Ending position on the horizontal axis.
-        :param endy: Ending position on the vertical axis.
+        :param deltax: change in position on the horizontal axis.
+        :param deltay: change in position on the vertical axis.
         :param duration: (optional) Number of milisecond to do the swipe (shorter is faster).
 
         """
+        size = self.get_window_size()
+        height = size[0]
+        width = size[1]
+        startx = width*startx
+        starty = height*starty
+        endx = width*deltax
+        endy = height*deltay
 
         self.driver.swipe(startx, starty, endx, endy, duration)
 
-    def swipe_up(self, startx=0.5, starty=0.7, endx=0.5, endy=0.3, duration=500):
+    def swipe_up(self, startx=0.5, starty=0.8, deltax=0 , deltay=-0.5, duration=500):
         """
         Pre-defined swipe action starting near the bottom of the screen to the top
         """
-        self.swipe(startx, starty, endx, endy, duration)
+        self.swipe(startx, starty, deltax, deltay, duration)
 
-    def swipe_down(self, startx=0.5, starty=0.3, endx=0.5, endy=0.7, duration=500):
+    def swipe_down(self, startx=0.5, starty=0.3, deltax=0, deltay=0.5, duration=500):
         """
         Pre-defined swipe action starting from the top of the screen to the bottom
         """
-        self.swipe(startx, starty, endx, endy, duration)
+        self.swipe(startx, starty, deltax, deltay, duration)
 
-    def swipe_left(self, startx=0.8, starty=0.5, endx=0.2, endy=0.5, duration=500):
+    def swipe_left(self, startx=0.8, starty=0.5, deltax=-0.7, deltay=0, duration=500):
         """
         Pre-defined swipe action starting from left to right in the middle of the screen.
         """
-        self.swipe(startx, starty, endx, endy, duration)
+        self.swipe(startx, starty, deltax, deltay, duration)
 
-    def swipe_right(self, startx=0.2, starty=0.5, endx=0.8, endy=0.5, duration=500):
+    def swipe_right(self, startx=0.2, starty=0.5, deltax=0.7, deltay=0, duration=500):
         """
         Pre-defined swipe action starting from right to left in the middle of the screen.
         """
-        self.swipe(startx, starty, endx, endy, duration)
+        self.swipe(startx, starty, deltax, deltay, duration)
 
 
-    def bezel_swipe_left(self, starty=None, endy=None):
+    def bezel_swipe_left(self, starty=None):
         """
         swipes in from left, halfway down the screen
         optional params: you can include starty to do a straight across swipe at that Y coord
-          or you can include starty and endy to do a diagonal bezel swipe
         """
         if (starty==None):
-            starty=endy=.5
-        elif (endy==None):
-            endy=starty
+            starty=.5
+            deltay=0
 
-        self.swipe(0.001, starty, .8, endy)
+        self.swipe(0.001, starty, .8, deltay)
 
-    def bezel_swipe_right(self, starty=0, endy=None):
+    def bezel_swipe_right(self, starty=None):
         """
         swipes in from right, halfway down the screen
         optional params: you can include starty to do a straight across swipe at that Y coord
-          or you can include starty and endy to do a diagonal bezel swipe
         """
         if (starty==None):
-            starty=endy=.5
-        elif (endy==None):
-            endy=starty
+            starty=.5
+            deltay=0
 
-        self.swipe(.9999, starty, .2, endy)
+        self.swipe(.9999, starty, -.8, deltay)
 
-    def bezel_swipe_top(self, startx=None, endx=None):
+    def bezel_swipe_top(self, startx=None):
         """
         swipes in from top, halfway across top of the screen
         optional params: you can include startx to do a straight vertical swipe at that x coord
-          or you can include startx and endx to do a diagonal bezel swipe
         """
         if (startx==None):
-            startx=endx=.5
-        elif (endx==None):
-            endx=startx
+            startx=.5
+            deltax=0
 
-        self.swipe(startx, 0.001, endx, .8)
+        self.swipe(startx, 0.001, deltax, .8)
 
-    def bezel_swipe_bottom(self, startx=None, endx=None):
+    def bezel_swipe_bottom(self, startx=None):
         """
         swipes in from bottom, halfway across top of the screen
         optional params: you can include startx to do a straight vertical swipe at that x coord
-          or you can include startx and endx to do a diagonal bezel swipe
+
         """
         if (startx==None):
-            startx=endx=.5
-        elif (endx==None):
-            endx=startx
+            startx=.5
+            deltax=0
 
-        self.swipe(startx, .9999, endx, .2)
+        self.swipe(startx, .9999, deltax, -.8)
 
     def tap_on_screen(self, *args):
         """
