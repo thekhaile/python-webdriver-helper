@@ -6,6 +6,10 @@ class Device(object):
     def __init__(self , driver=None):
         self.driver = driver
 
+
+    def quit(self):
+        self.driver.quit()
+        
     def find_element(self, strategy, value):
         """
 
@@ -93,7 +97,10 @@ class Device(object):
         endx = width*deltax
         endy = height*deltay
 
+        if not self.is_current_context_native():
+            self.switch_to_native()
         self.driver.swipe(startx, starty, endx, endy, duration)
+
 
     def swipe_up(self, startx=0.5, starty=0.8, deltax=0 , deltay=-0.5, duration=500):
         """
@@ -297,3 +304,24 @@ class Device(object):
                 return
 
         raise RuntimeError('Could not find a webview to switch to.  Aborting.')
+
+    def get_contexts(self):
+        """
+        :return: the contexts within the current session.
+        """
+        return self.driver.contexts
+
+    def get_current_context(self):
+        """
+        :return: the current context of the current session.
+        """
+        return self.driver.current_context
+
+    def is_current_context_native(self):
+        """
+        :rtype : boolean
+        :return:
+        """
+        current_context = self.get_current_context()
+        if current_context.lower().find('native') > -1:
+            return True
