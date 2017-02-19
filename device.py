@@ -67,7 +67,7 @@ class Device(object):
         else:
             return True
 
-    def swipe(self, startx, starty, endx, endy, duration=None):
+    def swipe(self, startx, starty, endx, endy, duration=500):
         """
         Swipe across the screen or element.
         If phone rotates, x and y rotate with it.
@@ -82,35 +82,35 @@ class Device(object):
         :param starty: Starting position on the vertical axis.
         :param endx: Ending position on the horizontal axis.
         :param endy: Ending position on the vertical axis.
-        :param duration: (optional) Number of seconds to do the swipe (shorter is faster).
+        :param duration: (optional) Number of milisecond to do the swipe (shorter is faster).
 
         """
 
         self.driver.swipe(startx, starty, endx, endy, duration)
 
-    def swipe_up(self, startx=0.5, starty=0.7, endx=0.5, endy=0.3, duration=None):
+    def swipe_up(self, startx=0.5, starty=0.7, endx=0.5, endy=0.3, duration=500):
         """
         Pre-defined swipe action starting near the bottom of the screen to the top
         """
-        self.driver.swipe(startx, starty, endx, endy, duration)
+        self.swipe(startx, starty, endx, endy, duration)
 
-    def swipe_down(self, startx=0.5, starty=0.3, endx=0.5, endy=0.7, duration=None):
+    def swipe_down(self, startx=0.5, starty=0.3, endx=0.5, endy=0.7, duration=500):
         """
         Pre-defined swipe action starting from the top of the screen to the bottom
         """
-        self.driver.swipe(startx, starty, endx, endy, duration)
+        self.swipe(startx, starty, endx, endy, duration)
 
-    def swipe_left(self, startx=0.8, starty=0.5, endx=0.2, endy=0.5, duration=None):
+    def swipe_left(self, startx=0.8, starty=0.5, endx=0.2, endy=0.5, duration=500):
         """
         Pre-defined swipe action starting from left to right in the middle of the screen.
         """
-        self.driver.swipe(startx, starty, endx, endy, duration)
+        self.swipe(startx, starty, endx, endy, duration)
 
-    def swipe_right(self, startx=0.2, starty=0.5, endx=0.8, endy=0.5, duration=None):
+    def swipe_right(self, startx=0.2, starty=0.5, endx=0.8, endy=0.5, duration=500):
         """
         Pre-defined swipe action starting from right to left in the middle of the screen.
         """
-        self.driver.swipe(startx, starty, endx, endy, duration)
+        self.swipe(startx, starty, endx, endy, duration)
 
 
     def bezel_swipe_left(self, starty=None, endy=None):
@@ -124,7 +124,7 @@ class Device(object):
         elif (endy==None):
             endy=starty
 
-        self.driver.swipe(0.001, starty, .8, endy)
+        self.swipe(0.001, starty, .8, endy)
 
     def bezel_swipe_right(self, starty=0, endy=None):
         """
@@ -137,7 +137,7 @@ class Device(object):
         elif (endy==None):
             endy=starty
 
-        self.driver.swipe(.9999, starty, .2, endy)
+        self.swipe(.9999, starty, .2, endy)
 
     def bezel_swipe_top(self, startx=None, endx=None):
         """
@@ -150,7 +150,7 @@ class Device(object):
         elif (endx==None):
             endx=startx
 
-        self.driver.swipe(startx, 0.001, endx, .8)
+        self.swipe(startx, 0.001, endx, .8)
 
     def bezel_swipe_bottom(self, startx=None, endx=None):
         """
@@ -163,7 +163,7 @@ class Device(object):
         elif (endx==None):
             endx=startx
 
-        self.driver.swipe(startx, .9999, endx, .2)
+        self.swipe(startx, .9999, endx, .2)
 
     def tap_on_screen(self, *args):
         """
