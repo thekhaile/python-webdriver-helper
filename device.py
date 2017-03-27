@@ -6,7 +6,6 @@ class Device(object):
     def __init__(self , driver=None):
         self.driver = driver
 
-
     def quit(self):
         self.driver.quit()
 
@@ -51,7 +50,7 @@ class Device(object):
         :return: the boolean value of whether we are on an Android platform
         """
         if self.is_mobile_web():
-            if self.driver.desired_capabilities['platform'] == 'Android':
+            if self.driver.desired_capabilities['platformName'] == 'Android':
                 return True
             else:
                 return False
@@ -101,26 +100,31 @@ class Device(object):
             self.switch_to_native()
         self.driver.swipe(startx, starty, endx, endy, duration)
 
-
-    def swipe_up(self, startx=0.5, starty=0.8, deltax=0 , deltay=-0.5, duration=500):
+    def swipe_up(self, startx=0.5, starty=0.8, deltax=0 , deltay=-0.5, duration=250):
         """
         Pre-defined swipe action starting near the bottom of the screen to the top
         """
+        if self.is_android():
+            deltay=deltay*(-1)
+
         self.swipe(startx, starty, deltax, deltay, duration)
 
-    def swipe_down(self, startx=0.5, starty=0.3, deltax=0, deltay=0.5, duration=500):
+    def swipe_down(self, startx=0.5, starty=0.3, deltax=0, deltay=0.5, duration=250):
         """
         Pre-defined swipe action starting from the top of the screen to the bottom
         """
+        if self.is_android():
+            deltay=deltay*(-1)
+
         self.swipe(startx, starty, deltax, deltay, duration)
 
-    def swipe_left(self, startx=0.8, starty=0.5, deltax=-0.7, deltay=0, duration=500):
+    def swipe_left(self, startx=0.8, starty=0.5, deltax=-0.7, deltay=0, duration=250):
         """
         Pre-defined swipe action starting from left to right in the middle of the screen.
         """
         self.swipe(startx, starty, deltax, deltay, duration)
 
-    def swipe_right(self, startx=0.2, starty=0.5, deltax=0.7, deltay=0, duration=500):
+    def swipe_right(self, startx=0.2, starty=0.5, deltax=0.7, deltay=0, duration=250):
         """
         Pre-defined swipe action starting from right to left in the middle of the screen.
         """
@@ -304,6 +308,9 @@ class Device(object):
         if self.is_current_context_native():
             for context in self.driver.contexts:
                 if (context.lower().find("web") > -1):
+                    self.driver.switch_to.context(context)
+                    return
+                elif (context.lower().find("chromium") > -1):
                     self.driver.switch_to.context(context)
                     return
             raise RuntimeError('Could not find a webview to switch to.  Aborting.')
