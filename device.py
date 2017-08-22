@@ -1,10 +1,12 @@
 __author__ = 'khaile'
 import os
 from time import sleep
+from appium.webdriver.common.touch_action import TouchAction
 
 class Device(object):
     def __init__(self , driver=None):
         self.driver = driver
+        self.action = TouchAction(self.driver)
 
     def quit(self):
         self.driver.quit()
@@ -256,18 +258,18 @@ class Device(object):
         """
         self.driver.press_keycode(4)
 
-    def save_screenshot(self, filename):
-        """
-        Gets the screenshot of the current window. Returns False if there is
-           any IOError, else returns True. Use full paths in your filename.
-
-        :Args:
-         - filename: The full path you wish to save your screenshot to.
-
-        :Usage:
-            driver.get_screenshot_as_file('/Screenshots/foo.png')
-        """
-        self.driver.save_screenshot(filename)
+    # def save_screenshot(self, filename):
+    #     """
+    #     Gets the screenshot of the current window. Returns False if there is
+    #        any IOError, else returns True. Use full paths in your filename.
+    #
+    #     :Args:
+    #      - filename: The full path you wish to save your screenshot to.
+    #
+    #     :Usage:
+    #         driver.get_screenshot_as_file('/Screenshots/foo.png')
+    #     """
+    #     self.driver.save_screenshot(filename)
 
     def lock_device(self, seconds):
         """Lock the device for a certain period of time. Android and iOS 8.0 only.
@@ -339,3 +341,13 @@ class Device(object):
             return True
         else:
             return False
+
+    def save_screenshot(self,filename , path='./'):
+        """
+        Captures a screenshot and saves in the current directory with the filename given in png
+        :param filename: name of the file
+        :param path: default to be the current folder
+        :return:
+        """
+        self.driver.save_screenshot(path+filename+'.png')
+        sleep(1)

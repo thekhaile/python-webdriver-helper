@@ -156,7 +156,7 @@ class Element(object):
         coordinates['x'] = coordinates['x']+ size['width']/2
         coordinates['y'] = coordinates['y']+ size['height']/2
 
-        self.long_press(x=coordinates['x'], y=coordinates['y']).perform()
+        self.action.long_press(x=coordinates['x'], y=coordinates['y']).perform()
 
 class Button(Element):
     """
