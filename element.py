@@ -353,7 +353,6 @@ class Alert(Element):
     def accept(self):
         """
         Try interacting with the positive action of Allow first, If not try OK, and finally try Yes
-        :return:
         """
         try:
             el = self.ui_object.find_element(MobileBy.ID, 'Allow')
@@ -370,7 +369,6 @@ class Alert(Element):
     def dismiss(self):
         """
         Try interacting with the negative action of Don't Allow first, If not try Cancel, and finally try No
-        :return:
         """
         try:
             el = self.ui_object.find_element(MobileBy.ID, "Don't Allow")
@@ -382,4 +380,20 @@ class Alert(Element):
             except NoSuchElementException:
                 el = self.ui_object.find_element(MobileBy.ID, 'No')
                 el.click()
+
+
+    def get_title(self):
+        """
+        :return: the header of the alert
+        """
+        el = self.ui_object.find_element(MobileBy.CLASS_NAME, 'UIAStaticText')
+        return el.text
+
+    def get_body(self):
+        """
+        :return: the body of the alert
+        """
+        els = self.ui_object.find_elements(MobileBy.CLASS_NAME, 'UIAStaticText')
+        el = els[1]
+        return el.text
 
