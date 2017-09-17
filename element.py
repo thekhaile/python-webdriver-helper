@@ -2,6 +2,7 @@ __author__ = 'khaile'
 from device import *
 from appium.webdriver.common.mobileby import MobileBy
 from appium.webdriver.common.touch_action import TouchAction
+from selenium.common.exceptions import NoSuchElementException
 
 class Type(object):
     """
@@ -62,6 +63,13 @@ class Type(object):
         :return: the RadioButton class
         """
         return RadioButton(ui_obj, self.driver)
+
+    def Alert(self, ui_obj):
+        """
+        :param ui_obj: the element object on which actions are being applied
+        :return: the RadioButton class
+        """
+        return Alert(ui_obj, self.driver)
 
 
 class Element(object):
@@ -336,3 +344,42 @@ class RadioButton(Element):
 class Cell(Element):
      def __init__(self, ui_obj, webdriver):
         Element.__init__(self, ui_object=ui_obj, driver=webdriver)
+
+
+class Alert(Element):
+    def __init__(self, ui_obj, webdriver):
+        Element.__init__(self, ui_object=ui_obj, driver=webdriver)
+
+    def accept(self):
+        """
+        Try interacting with the positive action of Allow first, If not try OK, and finally try Yes
+        :return:
+        """
+        try:
+            el = self.ui_object.find_element(MobileBy.ID, 'Allow')
+            el.click()
+        except NoSuchElementException:
+            try:
+                el = self.ui_object.find_element(MobileBy.ID, 'OK')
+                el.click()
+            except NoSuchElementException:
+                el = self.ui_object.find_element(MobileBy.ID, 'Yes')
+                el.click()
+
+
+    def dismiss(self):
+        """
+        Try interacting with the negative action of Don't Allow first, If not try Cancel, and finally try No
+        :return:
+        """
+        try:
+            el = self.ui_object.find_element(MobileBy.ID, "Don't Allow")
+            el.click()
+        except NoSuchElementException:
+            try:
+                el = self.ui_object.find_element(MobileBy.ID, 'Cancel')
+                el.click()
+            except NoSuchElementException:
+                el = self.ui_object.find_element(MobileBy.ID, 'No')
+                el.click()
+
