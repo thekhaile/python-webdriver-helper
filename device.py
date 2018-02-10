@@ -43,7 +43,7 @@ class Device(object):
         """
         :return: return proper strategy class based on whether tests run on desktop or mobile
         """
-        if self.is_mobile():
+        if self.isMobile():
             return MobileBy
         else:
             return By
@@ -61,7 +61,7 @@ class Device(object):
         """
         :return: the boolean value of whether we are on an Android platform
         """
-        if self.is_mobile_web():
+        if self.isMobileWeb():
             if self.driver.desired_capabilities['platformName'] == 'Android':
                 return True
             else:
@@ -109,7 +109,7 @@ class Device(object):
         :param duration: (optional) Number of milisecond to do the swipe (shorter is faster).
 
         """
-        size = self.get_window_size()
+        size = self.getWindowSize()
         height = size[0]
         width = size[1]
         startx = width*startx
@@ -117,15 +117,15 @@ class Device(object):
         endx = width*deltax
         endy = height*deltay
 
-        if not self.is_current_context_native():
-            self.switch_to_native()
+        if not self.isCurrentContextNative():
+            self.switchToNative()
         self.driver.swipe(startx, starty, endx, endy, duration)
 
     def swipeUp(self, startx=0.5, starty=0.8, deltax=0 , deltay=-0.5, duration=250):
         """
         Pre-defined swipe action starting near the bottom of the screen to the top
         """
-        if self.is_android():
+        if self.isAndroid():
             deltay=deltay*(-1)
 
         self.swipe(startx, starty, deltax, deltay, duration)
@@ -134,7 +134,7 @@ class Device(object):
         """
         Pre-defined swipe action starting from the top of the screen to the bottom
         """
-        if self.is_android():
+        if self.isAndroid():
             deltay=deltay*(-1)
 
         self.swipe(startx, starty, deltax, deltay, duration)
@@ -250,10 +250,10 @@ class Device(object):
         if (current != orientation):
             self.driver.orientation = orientation
     def rotateToPortrait(self):
-        self.__set_orientation('PORTRAIT')
+        self.__setOrientation('PORTRAIT')
 
     def rotateToLandscape(self):
-        self.__set_orientation('LANDSCAPE')
+        self.__setOrientation('LANDSCAPE')
 
     def dismissKeyboard(self, key_name=None, key=None, strategy=None):
         """
@@ -266,7 +266,7 @@ class Device(object):
         self.driver.hide_keyboard(key_name, key, strategy)
 
     def tapDeleteKey(self):
-        if self.is_ios():
+        if self.isIos():
             self.driver.find_element_by_id('delete').click()
         else:
             self.driver.press_keycode(67)
@@ -295,7 +295,7 @@ class Device(object):
         :Args:
          - the duration to lock the device, in seconds
         """
-        if self.is_ios():
+        if self.isIos():
             self.driver.lock(seconds)
         else:
             os.system('adb shell input keyevent 26')
@@ -308,14 +308,14 @@ class Device(object):
         Gets window size.
         :return: tuple of (height,width)
         """
-        size=self.driver.get_window_size()
+        size=self.driver.getWindowSize()
         self.height=size['height']
         self.width =size['width']
 
         return (self.height, self.width)
 
     def switchToNative(self):
-        if self.is_current_context_native():
+        if self.isCurrentContextNative():
             pass
         else:
             for context in self.driver.contexts:
@@ -326,7 +326,7 @@ class Device(object):
             raise RuntimeError('Could not find the native app to switch to.  Aborting.')
 
     def switchToWebview(self):
-        if self.is_current_context_native():
+        if self.isCurrentContextNative():
             for context in self.driver.contexts:
                 if (context.lower().find("web") > -1):
                     self.driver.switch_to.context(context)
@@ -355,7 +355,7 @@ class Device(object):
         :rtype : boolean
         :return:
         """
-        current_context = self.get_current_context()
+        current_context = self.getCurrentContext()
         if current_context.lower().find('native') > -1:
             return True
         else:
