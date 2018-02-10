@@ -2,6 +2,8 @@ __author__ = 'khaile'
 import os
 from time import sleep
 from appium.webdriver.common.touch_action import TouchAction
+from selenium.webdriver.common.by import By
+from appium.webdriver.common.mobileby import MobileBy
 
 class Device(object):
     def __init__(self , driver=None):
@@ -37,6 +39,14 @@ class Device(object):
             return elements
         except:
             return elements
+    def getStrategy(self):
+        """
+        :return: return proper strategy class based on whether tests run on desktop or mobile
+        """
+        if self.is_mobile():
+            return MobileBy
+        else:
+            return By
 
     def is_ios(self):
         """
@@ -64,13 +74,22 @@ class Device(object):
 
     def is_mobile_web(self):
         """
-        :return: boolean value of the current automated target is a native app.
+        :return: boolean value if the current automated target is a native app.
         False will be returned if it is a mobile web for example.
         """
         if self.driver.desired_capabilities.has_key('app'):
             return False
         else:
             return True
+    def is_mobile(self):
+        """
+        :return: boolean value if the current automated target is a mobile.
+        False will be returned if it is a desktop.
+        """
+        if self.driver.desired_capabilities.has_key('platformName'):
+            return True
+        else:
+            return False
 
     def swipe(self, startx, starty, deltax, deltay, duration=500):
         """
