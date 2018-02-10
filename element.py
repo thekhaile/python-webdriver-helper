@@ -82,37 +82,37 @@ class Element(object):
         self.action = TouchAction(self.driver)
         self.device = Device(self.driver)
 
-    def get_location(self):
+    def getLocation(self):
         """
         :return: x,y coordinates (top-left) of the ui_element
         """
         return self.ui_object.location
 
-    def get_size(self):
+    def getSize(self):
         """
         :return: size (x pixels wide, y pixels high) of the ui_element
         """
         return self.ui_object.size
 
-    def get_name(self):
+    def getName(self):
         """
         :return: displayed name of the ui_element
         """
         return self.ui_object.get_attribute('name')
 
-    def get_type(self):
+    def getType(self):
         """
         :return: 'type' attribute of the ui_element
         """
         return self.ui_object.get_attribute('type')
 
-    def get_value(self):
+    def getValue(self):
         """
         :return: 'value' attribute of the ui_element
         """
         return self.ui_object.get_attribute('value')
 
-    def get_label(self):
+    def getLabel(self):
         """
         :return: 'label' attribute of the ui_element
         """
@@ -124,7 +124,7 @@ class Element(object):
         """
         self.ui_object.click()
 
-    def tap_hybrid(self):
+    def tapHybrid(self):
         """
         Performs tap action on the element for hybrid apps
         """
@@ -132,9 +132,9 @@ class Element(object):
         size = self.ui_object.size
 
         # Determine if we need to take into account the browser header of mobile web
-        if self.device.is_mobile_web():
-            self.device.switch_to_native()
-            if self.device.is_ios():
+        if self.device.isMobileWeb():
+            self.device.switchToNative()
+            if self.device.isIos():
                 #Assuming this is a placeholder for the URL Header Bar on iOS
                 urlHeaderBar = self.driver.find_element(MobileBy.CLASS_NAME, 'UIAButton')
                 urlHeaderBarSize = urlHeaderBar.size
@@ -145,7 +145,7 @@ class Element(object):
                 webViewLocation = webView.location
                 location['y'] = webViewLocation['y'] + location['y'] + size['height']/2
                 location['x'] = webViewLocation['x'] + location['x'] + size['width']/2
-            self.device.switch_to_webview()
+            self.device.switchToWebview()
         else:
             #This is simply native app wrapper
             location['x'] = location['x'] + size['width']/2
@@ -159,8 +159,8 @@ class Element(object):
         """
         performs long press action at the center of the element
         """
-        coordinates = self.get_location()
-        size = self.get_size()
+        coordinates = self.getLocation()
+        size = self.getSize()
         coordinates['x'] = coordinates['x']+ size['width']/2
         coordinates['y'] = coordinates['y']+ size['height']/2
 
@@ -174,7 +174,7 @@ class Button(Element):
     def __init__(self, ui_obj, webdriver):
         Element.__init__(self, ui_object=ui_obj, driver=webdriver)
 
-    def is_enabled(self):
+    def isEnabled(self):
         """
         :return: boolean whether or not the element is enabled
         """
@@ -185,13 +185,13 @@ class Picker(Element):
         Element.__init__(self, ui_object=ui_obj, driver=webdriver)
 
 
-    def get_current_value(self):
+    def getCurrentValue(self):
         """
         :return: currently selected value
         """
         return self.ui_object.get_attribute('value')
 
-    def scroll_to_value(self, value):
+    def scrollToValue(self, value):
         """
         Scroll the picker to the specified value
         :param value: one of the available values in the picker
@@ -232,20 +232,20 @@ class TextField(Element):
         Element.__init__(self, ui_object=ui_obj, driver=webdriver)
 
 
-    def get_displayed_text(self):
+    def getDisplayedText(self):
         """
         :return: the displayed text or placeholder
         """
         return self.ui_object.text
 
-    def enter_text(self, text):
+    def enterText(self, text):
         """
         Inserts the text into the field
         :param text: the text that needs to go into the field
         """
         self.ui_object.send_keys(text)
 
-    def clear_text(self):
+    def clearText(self):
         """
         Deletes the current text in the field
         """
@@ -254,7 +254,7 @@ class TextField(Element):
         # ## The method below could be applied to iOS app only ##
         # self.driver.find_element_by_xpath('//UIAButton[@name="Clear text"]').click()
 
-    def go_to_next_field(self):
+    def goToNextField(self):
         """
         Similar to hitting tab
         """
@@ -267,13 +267,13 @@ class CheckBox(Element):
     def __init__(self, ui_obj, webdriver):
         Element.__init__(self, ui_object=ui_obj, driver=webdriver)
 
-    def is_enabled(self):
+    def isEnabled(self):
         """
         :return: boolean whether or not the element is enabled
         """
         return self.ui_object.is_enabled()
 
-    def is_checked(self):
+    def isChecked(self):
         """
         :return: boolean whether or not the checkbox is checked
         """
@@ -300,14 +300,14 @@ class Switch(Element):
     def __init__(self, ui_obj, webdriver):
         Element.__init__(self, ui_object=ui_obj, driver=webdriver)
 
-    def is_enabled(self):
+    def isEnabled(self):
         """
         :return: boolean whether or not the element is enabled
         """
 
         return self.ui_object.is_enabled()
 
-    def is_on(self):
+    def isOn(self):
         """
         :return: boolean whether or not the checkbox is checked
         """
@@ -329,13 +329,13 @@ class RadioButton(Element):
     def __init__(self, ui_obj, webdriver):
         Element.__init__(self, ui_object=ui_obj, driver=webdriver)
 
-    def is_enabled(self):
+    def isEnabled(self):
         """
         :return: boolean whether or not the element is enabled
         """
         return self.ui_object.is_enabled()
 
-    def is_selected(self):
+    def isSelected(self):
         """
         :return: boolean whether or not the checkbox is checked
         """
@@ -382,14 +382,14 @@ class Alert(Element):
                 el.click()
 
 
-    def get_title(self):
+    def getTitle(self):
         """
         :return: the header of the alert
         """
         el = self.ui_object.find_element(MobileBy.CLASS_NAME, 'UIAStaticText')
         return el.text
 
-    def get_body(self):
+    def getBody(self):
         """
         :return: the body of the alert
         """

@@ -13,7 +13,7 @@ class Device(object):
     def quit(self):
         self.driver.quit()
 
-    def find_element(self, strategy, value):
+    def findElement(self, strategy, value):
         """
 
         :param strategy: method such as ID, Class name, or xpath, etc...
@@ -26,7 +26,7 @@ class Device(object):
         except:
             return None
 
-    def find_elements(self, strategy, value):
+    def findElements(self, strategy, value):
         """
 
         :param strategy: method such as ID, Class name, or xpath, etc...
@@ -48,7 +48,7 @@ class Device(object):
         else:
             return By
 
-    def is_ios(self):
+    def isIos(self):
         """
         :return: the boolean value of whether we are on an iOS platform
         """
@@ -57,7 +57,7 @@ class Device(object):
         else:
             return False
 
-    def is_android(self):
+    def isAndroid(self):
         """
         :return: the boolean value of whether we are on an Android platform
         """
@@ -72,7 +72,7 @@ class Device(object):
             else:
                 return False
 
-    def is_mobile_web(self):
+    def isMobileWeb(self):
         """
         :return: boolean value if the current automated target is a native app.
         False will be returned if it is a mobile web for example.
@@ -81,7 +81,7 @@ class Device(object):
             return False
         else:
             return True
-    def is_mobile(self):
+    def isMobile(self):
         """
         :return: boolean value if the current automated target is a mobile.
         False will be returned if it is a desktop.
@@ -121,7 +121,7 @@ class Device(object):
             self.switch_to_native()
         self.driver.swipe(startx, starty, endx, endy, duration)
 
-    def swipe_up(self, startx=0.5, starty=0.8, deltax=0 , deltay=-0.5, duration=250):
+    def swipeUp(self, startx=0.5, starty=0.8, deltax=0 , deltay=-0.5, duration=250):
         """
         Pre-defined swipe action starting near the bottom of the screen to the top
         """
@@ -130,7 +130,7 @@ class Device(object):
 
         self.swipe(startx, starty, deltax, deltay, duration)
 
-    def swipe_down(self, startx=0.5, starty=0.3, deltax=0, deltay=0.5, duration=250):
+    def swipeDown(self, startx=0.5, starty=0.3, deltax=0, deltay=0.5, duration=250):
         """
         Pre-defined swipe action starting from the top of the screen to the bottom
         """
@@ -139,20 +139,20 @@ class Device(object):
 
         self.swipe(startx, starty, deltax, deltay, duration)
 
-    def swipe_left(self, startx=0.8, starty=0.5, deltax=-0.7, deltay=0, duration=250):
+    def swipeLeft(self, startx=0.8, starty=0.5, deltax=-0.7, deltay=0, duration=250):
         """
         Pre-defined swipe action starting from left to right in the middle of the screen.
         """
         self.swipe(startx, starty, deltax, deltay, duration)
 
-    def swipe_right(self, startx=0.2, starty=0.5, deltax=0.7, deltay=0, duration=250):
+    def swipeRight(self, startx=0.2, starty=0.5, deltax=0.7, deltay=0, duration=250):
         """
         Pre-defined swipe action starting from right to left in the middle of the screen.
         """
         self.swipe(startx, starty, deltax, deltay, duration)
 
 
-    def bezel_swipe_left(self, starty=None):
+    def bezelSwipeLeft(self, starty=None):
         """
         swipes in from left, halfway down the screen
         optional params: you can include starty to do a straight across swipe at that Y coord
@@ -163,7 +163,7 @@ class Device(object):
 
         self.swipe(0.001, starty, .8, deltay)
 
-    def bezel_swipe_right(self, starty=None):
+    def bezelSwipeRight(self, starty=None):
         """
         swipes in from right, halfway down the screen
         optional params: you can include starty to do a straight across swipe at that Y coord
@@ -174,7 +174,7 @@ class Device(object):
 
         self.swipe(.9999, starty, -.8, deltay)
 
-    def bezel_swipe_top(self, startx=None):
+    def bezelSwipeTop(self, startx=None):
         """
         swipes in from top, halfway across top of the screen
         optional params: you can include startx to do a straight vertical swipe at that x coord
@@ -185,7 +185,7 @@ class Device(object):
 
         self.swipe(startx, 0.001, deltax, .8)
 
-    def bezel_swipe_bottom(self, startx=None):
+    def bezelSwipeBottom(self, startx=None):
         """
         swipes in from bottom, halfway across top of the screen
         optional params: you can include startx to do a straight vertical swipe at that x coord
@@ -197,7 +197,7 @@ class Device(object):
 
         self.swipe(startx, .9999, deltax, -.8)
 
-    def tap_on_screen(self, *args):
+    def tapOnScreen(self, *args):
         """
         This method, on the WebDriver object, allows for tapping with multiple fingers, simply by passing in an array of x-y coordinates to tap.
         # set up array of two coordinates
@@ -233,14 +233,14 @@ class Device(object):
         self.driver.scroll(origin_el, destination_el)
 
 
-    def get_current_orientation(self):
+    def getCurrentOrientation(self):
         """
         Returns the current orientation of the device.  Possible values
         are: LANDSCAPE or PORTRAIT.
         """
         return self.driver.orientation
 
-    def __set_orientation(self, orientation):
+    def __setOrientation(self, orientation):
         """
         Sets the current orientation of the device.
         :param orientation: LANDSCAPE or PORTRAIT.
@@ -249,13 +249,13 @@ class Device(object):
         current = self.driver.orientation
         if (current != orientation):
             self.driver.orientation = orientation
-    def rotate_to_portrait(self):
+    def rotateToPortrait(self):
         self.__set_orientation('PORTRAIT')
 
-    def rotate_to_landscape(self):
+    def rotateToLandscape(self):
         self.__set_orientation('LANDSCAPE')
 
-    def dismiss_keyboard(self, key_name=None, key=None, strategy=None):
+    def dismissKeyboard(self, key_name=None, key=None, strategy=None):
         """
         Hides the software keyboard on the device. In iOS, use `key_name` to press
         a particular key, or `strategy`. In Android, no parameters are used.
@@ -265,13 +265,13 @@ class Device(object):
         """
         self.driver.hide_keyboard(key_name, key, strategy)
 
-    def tap_delete_key(self):
+    def tapDeleteKey(self):
         if self.is_ios():
             self.driver.find_element_by_id('delete').click()
         else:
             self.driver.press_keycode(67)
 
-    def tap_hardware_back_key(self):
+    def tapHardwareBackKey(self):
         """
         Presses on the device's hardware back button Android only.
         """
@@ -290,7 +290,7 @@ class Device(object):
     #     """
     #     self.driver.save_screenshot(filename)
 
-    def lock_device(self, seconds):
+    def lockDevice(self, seconds):
         """Lock the device for a certain period of time. Android and iOS 8.0 only.
         :Args:
          - the duration to lock the device, in seconds
@@ -303,7 +303,7 @@ class Device(object):
             os.system('adb shell input keyevent 26')
 
 
-    def get_window_size(self):
+    def getWindowSize(self):
         """
         Gets window size.
         :return: tuple of (height,width)
@@ -314,7 +314,7 @@ class Device(object):
 
         return (self.height, self.width)
 
-    def switch_to_native(self):
+    def switchToNative(self):
         if self.is_current_context_native():
             pass
         else:
@@ -325,7 +325,7 @@ class Device(object):
 
             raise RuntimeError('Could not find the native app to switch to.  Aborting.')
 
-    def switch_to_webview(self):
+    def switchToWebview(self):
         if self.is_current_context_native():
             for context in self.driver.contexts:
                 if (context.lower().find("web") > -1):
@@ -338,19 +338,19 @@ class Device(object):
         else:
             pass
 
-    def get_contexts(self):
+    def getContexts(self):
         """
         :return: the contexts within the current session.
         """
         return self.driver.contexts
 
-    def get_current_context(self):
+    def getCurrentContext(self):
         """
         :return: the current context of the current session.
         """
         return self.driver.current_context
 
-    def is_current_context_native(self):
+    def isCurrentContextNative(self):
         """
         :rtype : boolean
         :return:
@@ -361,7 +361,7 @@ class Device(object):
         else:
             return False
 
-    def save_screenshot(self,filename , path='./'):
+    def saveScreenshot(self,filename , path='./'):
         """
         Captures a screenshot and saves in the current directory with the filename given in png
         :param filename: name of the file
