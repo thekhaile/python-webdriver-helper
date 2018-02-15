@@ -87,7 +87,10 @@ class Device(object):
         False will be returned if it is a desktop.
         """
         if self.driver.desired_capabilities.has_key('platformName'):
-            return True
+            if self.driver.desired_capabilities.get('platformName') in ['iOS', 'Android']:
+                return True
+            else:
+                return False
         else:
             return False
 
