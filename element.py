@@ -132,7 +132,7 @@ class Element(object):
         size = self.ui_object.size
 
         # Determine if we need to take into account the browser header of mobile web
-        if self.device.isMobileWeb():
+        if self.device.isWeb():
             self.device.switchToNative()
             if self.device.isIos():
                 #Assuming this is a placeholder for the URL Header Bar on iOS
@@ -277,16 +277,25 @@ class CheckBox(Element):
         """
         :return: boolean whether or not the checkbox is checked
         """
-        return self.ui_object.get_attribute('checked')
+        if self.device.isWeb():
+            return self.ui_object.is_selected()
+        elif self.device.isIos():
+            if self.ui_object.get_attribute('value') == 1:
+                return True
+            else:
+                return False
+
+        else:
+            return self.ui_object.get_attribute('checked')
 
     def check(self):
-        if self.ui_object.get_attribute('checked'):
+        if self.isChecked():
             pass
         else:
             self.ui_object.click()
 
     def unCheck(self):
-        if not self.ui_object.get_attribute('checked'):
+        if not self.isChecked():
             self.ui_object.click()
         else:
             pass
@@ -309,9 +318,11 @@ class Switch(Element):
 
     def isOn(self):
         """
-        :return: boolean whether or not the checkbox is checked
+        :return: boolean whether or not the Switch is on
         """
-        if Device(self.driver).is_ios():
+        if self.device.isWeb():
+            return self.ui_object.is_selected()
+        elif self.device.isIos():
             if self.ui_object.get_attribute('value') == 1:
                 return True
             else:

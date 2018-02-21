@@ -61,7 +61,7 @@ class Device(object):
         """
         :return: the boolean value of whether we are on an Android platform
         """
-        if self.isMobileWeb():
+        if self.isWeb():
             if self.driver.desired_capabilities['platformName'] == 'Android':
                 return True
             else:
@@ -72,15 +72,16 @@ class Device(object):
             else:
                 return False
 
-    def isMobileWeb(self):
+    def isWeb(self):
         """
         :return: boolean value if the current automated target is a native app.
-        False will be returned if it is a mobile web for example.
+        False will be returned if it is a web app for example.
         """
         if self.driver.desired_capabilities.has_key('app'):
             return False
         else:
             return True
+
     def isMobile(self):
         """
         :return: boolean value if the current automated target is a mobile.
