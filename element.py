@@ -116,8 +116,11 @@ class Element(object):
         """
         :return: 'label' attribute of the ui_element
         """
-        return self.ui_object.get_attribute('label')
-
+        if self.device.isWeb():
+            return self.ui_object.text
+        else:
+            return self.ui_object.get_attribute('label')
+        
     def tap(self):
         """
         Performs tap action on the element
