@@ -87,6 +87,7 @@ class Device(object):
             return True
         else:
             return False
+
     def isMobile(self):
         """
         :return: boolean value if the current automated target is a mobile.
