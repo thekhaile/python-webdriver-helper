@@ -82,6 +82,11 @@ class Device(object):
         else:
             return True
 
+    def isMicrosoftEdge(self):
+        if self.driver.desired_capabilities.get('browserName') == 'MicrosoftEdge':
+            return True
+        else:
+            return False
     def isMobile(self):
         """
         :return: boolean value if the current automated target is a mobile.
