@@ -125,7 +125,13 @@ class Element(object):
         """
         Performs tap action on the element
         """
-        self.ui_object.click()
+        if self.device.isMobile():
+            if self.device.isChromium():
+                self.ui_object.click()
+            else:
+                self.tapHybrid()
+        else:
+            self.ui_object.click()
 
     def tapHybrid(self):
         """

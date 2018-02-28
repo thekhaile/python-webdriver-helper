@@ -83,7 +83,19 @@ class Device(object):
             return True
 
     def isMicrosoftEdge(self):
+        """
+        :return: boolean value if the current automated browser target is Microsoft edge
+        """
         if self.driver.desired_capabilities.get('browserName') == 'MicrosoftEdge':
+            return True
+        else:
+            return False
+
+    def isChromium(self):
+        """
+        :return: boolean value if the current automated browser target is Chrome on Android
+        """
+        if self.driver.current_context == 'CHROMIUM':
             return True
         else:
             return False
