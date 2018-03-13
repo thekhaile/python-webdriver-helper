@@ -2,6 +2,7 @@ __author__ = 'khaile'
 from device import *
 from appium.webdriver.common.mobileby import MobileBy
 from appium.webdriver.common.touch_action import TouchAction
+from selenium.webdriver.common.action_chains import ActionChains
 from selenium.common.exceptions import NoSuchElementException
 
 class Type(object):
@@ -80,6 +81,7 @@ class Element(object):
         self.ui_object = ui_object
         self.driver = driver
         self.action = TouchAction(self.driver)
+        self.actionChains = ActionChains(self.driver)
         self.device = Device(self.driver)
 
     def getLocation(self):
@@ -129,11 +131,11 @@ class Element(object):
             if self.device.isChromium():
                 self.ui_object.click()
             else:
-                self.tapHybrid()
+                self.tapByLocation()
         else:
             self.ui_object.click()
 
-    def tapHybrid(self):
+    def tapByLocation(self):
         """
         Performs tap action on the element for hybrid apps
         """
@@ -141,7 +143,7 @@ class Element(object):
         size = self.ui_object.size
 
         # Determine if we need to take into account the browser header of mobile web
-        if self.device.isWeb():
+        if self.device.isMobile():
             self.device.switchToNative()
             if self.device.isIos():
                 #Assuming this is a placeholder for the URL Header Bar on iOS
@@ -162,7 +164,10 @@ class Element(object):
         if location['x'] < 0 or location['y'] < 0:
             print 'Either x or y coordinate is negative'
         else:
-           self.action.tap(x=location['x'], y=location['y']).perform()
+            if self.device.isMobile():
+                self.action.tap(x=location['x'], y=location['y']).perform()
+            else:
+                self.actionChains.move_to_element_with_offset(self.ui_object, size['width']/2, size['height']/2).click().perform()
 
     def long_press(self):
         """
