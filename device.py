@@ -109,6 +109,15 @@ class Device(object):
         else:
             return False
 
+    def isInternetExplorer(self):
+        """
+        :return: boolean value if the current automated browser target is IE
+        """
+        if self.driver.desired_capabilities.get('browserName') == 'internet explorer':
+            return True
+        else:
+            return False
+
     def isMobile(self):
         """
         :return: boolean value if the current automated target is a mobile.

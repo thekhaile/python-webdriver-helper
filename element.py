@@ -133,7 +133,11 @@ class Element(object):
             else:
                 self.tapByLocation()
         else:
-            self.ui_object.click()
+            #Due to issue with clicking and double texts in textfield on IE, for clicking, this is a work-around.
+            if self.device.isInternetExplorer():
+                self.device.driver.execute_script("arguments[0].click();", self.ui_object)
+            else:
+                self.ui_object.click()
 
     def tapByLocation(self):
         """
