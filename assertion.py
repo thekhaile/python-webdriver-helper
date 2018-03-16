@@ -1,5 +1,6 @@
 __author__ = 'khaile'
 import unittest
+import sys
 
 class Assert(unittest.TestCase):
     def __init__(self):
@@ -15,6 +16,14 @@ class Assert(unittest.TestCase):
             # No unicode support in this build
             pass
 
+    def didThrowError(self):
+        """
+        This is to catch if an exception ( error by a failed assertion) is caught
+        """
+        if sys.exc_info() != (None, None, None):
+            return True
+        else:
+            return False
 
     def assertExists(self, obj, msg=None):
         """
