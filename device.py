@@ -401,12 +401,22 @@ class Device(object):
         else:
             return False
 
+    def createScreenshotDir(self, path='../../screenshots/'):
+        """
+        Create the screenshot directory for the test run
+        :param path: the relative or absolute path for the screenshot directory
+        """
+        try:
+            from pathlib import Path
+        except ImportError:
+            from pathlib2 import Path  # python 2 backport
+        Path(path).mkdir(exist_ok=True)
+
     def saveScreenshot(self,filename , path='./'):
         """
         Captures a screenshot and saves in the current directory with the filename given in png
         :param filename: name of the file
         :param path: default to be the current folder
-        :return:
         """
         self.driver.save_screenshot(path+filename+'.png')
         sleep(1)
