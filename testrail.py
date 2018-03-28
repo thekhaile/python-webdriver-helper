@@ -1,26 +1,17 @@
 # TestRail API binding for Python 3.x (API v2, available since TestRail 3.0)
 # Copyright Gurock Software GmbH. See license.md for details.
 import urllib2, json, base64
-from projectBase import ProjectBase
-
-def createClient(user, key):
-    client = APIClient()
-    client.user = user
-    client.key = key
-    return client
 
 class APIClient():
-    def __init__(self):
+    def __init__(self, user, key):
         baseUrl = 'https://mutualmobile.testrail.com'
-        self.user = ''
-        self.key = ''
+        self.user = user
+        self.key = key
         if not baseUrl.endswith('/'):
             baseUrl += '/'
         self.url = baseUrl + 'index.php?/api/v2/'
 
     def updateTestrail(self, caseId, resultFlag, msg=""):
-        client = createClient(ProjectBase.user, ProjectBase.key)
-
         with open('test_data.txt') as infile:
             content = infile.read().splitlines()
         runId = content[0]
@@ -36,7 +27,7 @@ class APIClient():
         statusId = 1 if resultFlag is True else 5
 
         if runId is not None:
-                client.sendPost(
+                self.sendPost(
                     'add_result_for_case/%s/%s/%s' % (runId, caseId, version),
                     {'status_id': statusId, 'comment': msg, 'version': version})
         else:
