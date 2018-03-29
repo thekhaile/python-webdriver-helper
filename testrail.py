@@ -5,6 +5,10 @@ import urllib2, json, base64
 class APIClient():
     def __init__(self, user, key):
         baseUrl = 'https://mutualmobile.testrail.com'
+        """
+        :param user: email address used to access TestRail
+        :param key: API key tied to your TestRail account
+        """
         self.user = user
         self.key = key
         if not baseUrl.endswith('/'):
