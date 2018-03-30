@@ -82,6 +82,15 @@ class Device(object):
         else:
             return True
 
+    def isFirefox(self):
+        """
+        :return: boolean value if the current automated browser target is Firefox
+        """
+        if self.driver.desired_capabilities.get('browserName') == 'firefox':
+            return True
+        else:
+            return False
+
     def isMicrosoftEdge(self):
         """
         :return: boolean value if the current automated browser target is Microsoft Edge
