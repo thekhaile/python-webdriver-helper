@@ -3,12 +3,16 @@
 import urllib2, json, base64
 
 class APIClient():
-    def __init__(self, user, key):
+    def __init__(self, runId, version, user, key):
         baseUrl = 'https://mutualmobile.testrail.com'
         """
         :param user: email address used to access TestRail
         :param key: API key tied to your TestRail account
+        :param runId: testrail run id
+        :param version: build version tests are executed against
         """
+        self.runId = runId
+        self.version = version
         self.user = user
         self.key = key
         if not baseUrl.endswith('/'):
@@ -16,11 +20,6 @@ class APIClient():
         self.url = baseUrl + 'index.php?/api/v2/'
 
     def updateTestrail(self, caseId, resultFlag, msg=""):
-        with open('test_data.txt') as infile:
-            content = infile.read().splitlines()
-        runId = content[0]
-        version = content[1]
-
         """
         :param case_id: test case id number
         :param run_id: test run id number
@@ -30,10 +29,10 @@ class APIClient():
         # status_id is 1 for Passed, 5 for Failed
         statusId = 1 if resultFlag is True else 5
 
-        if runId is not None:
+        if self.runId is not None:
                 self.sendPost(
-                    'add_result_for_case/%s/%s/%s' % (runId, caseId, version),
-                    {'status_id': statusId, 'comment': msg, 'version': version})
+                    'add_result_for_case/%s/%s/%s' % (self.runId, caseId, self.version),
+                    {'status_id': statusId, 'comment': msg, 'version': self.version})
         else:
             print("No run id - cannot update test result")
 
