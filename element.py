@@ -4,6 +4,7 @@ from appium.webdriver.common.mobileby import MobileBy
 from appium.webdriver.common.touch_action import TouchAction
 from selenium.webdriver.common.action_chains import ActionChains
 from selenium.common.exceptions import NoSuchElementException
+from selenium.webdriver.support.select import Select
 
 class Type(object):
     """
@@ -214,8 +215,11 @@ class Picker(Element):
         Scroll the picker to the specified value
         :param value: one of the available values in the picker
         """
-        # if Device().is_ios():
-        self.ui_object.send_keys(value)
+        if self.device.isWeb():
+            el = Select(self.ui_object)
+            el.select_by_visible_text(value)
+        else:
+            self.ui_object.send_keys(value)
         # else:
         #     textView = self.ui_object.find_element(MobileBy.CLASS_NAME, 'android.widget.EditText')
         #     if textView.text == value:
