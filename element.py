@@ -216,8 +216,12 @@ class Picker(Element):
         :param value: one of the available values in the picker
         """
         if self.device.isWeb():
-            el = Select(self.ui_object)
-            el.select_by_visible_text(value)
+            if not self.device.isSafari():
+                el = Select(self.ui_object)
+                el.select_by_visible_text(value)
+            else:
+                self.ui_object.send_keys(value)
+
         else:
             self.ui_object.send_keys(value)
         # else:
