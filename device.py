@@ -429,3 +429,60 @@ class Device(object):
         """
         self.driver.save_screenshot(path+filename+'.png')
         sleep(1)
+
+    def navigateToUrl(self, url):
+        """
+        Navigates to a specific url
+        :param url: the url to navigate to
+        """
+        self.driver.get(url)
+
+    def refresh(self):
+        """
+        Refreshes the current page
+        """
+        self.driver.refresh()
+
+    def getCurrentURL(self):
+        """
+        :return: The current url of the page
+        """
+        return self.driver.current_url
+
+    def getDOM(self):
+        """
+        :return: the xml of the Document Object Model
+        """
+        return self.driver.page_source
+
+    def navigateBack(self):
+        """
+        Browsers: Equivalent of tapping the Back arrow in the browser tool box
+        """
+        self.driver.back()
+
+    def navigateForward(self):
+        """
+        Browsers: Equivalent of tapping the Forward arrow in the browser tool box
+        """
+        self.driver.forward()
+
+    def maximizeWindow(self):
+        """
+        Browsers: Maximize the current window view
+        """
+        self.driver.maximize_window()
+
+    def setImplicitlyWait(self, time):
+        """
+        Sets a sticky timeout to implicitly wait for an element to be found,
+           or a command to complete. This method only needs to be called one
+           time per session. To set the timeout for calls to
+           execute_async_script, see set_script_timeout.
+
+        :Args:
+         - time: Amount of time to wait (in seconds)
+
+        """
+        self.driver.implicitly_wait(time)
+
