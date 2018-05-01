@@ -61,16 +61,10 @@ class Device(object):
         """
         :return: the boolean value of whether we are on an Android platform
         """
-        if self.isWeb():
-            if self.driver.desired_capabilities['platformName'] == 'Android':
-                return True
-            else:
-                return False
+        if self.driver.desired_capabilities['platformName'] == 'Android':
+            return True
         else:
-            if self.driver.desired_capabilities['platformName'] == 'Android':
-                return True
-            else:
-                return False
+            return False
 
     def isWeb(self):
         """
@@ -137,6 +131,15 @@ class Device(object):
                 return True
             else:
                 return False
+        else:
+            return False
+
+    def isHybrid(self):
+        """
+        :return: boolean value if the current automated target is a hybrid app (webview inside a native app)
+        """
+        if not self.isWeb() and self.hasWebView():
+            return True
         else:
             return False
 
@@ -312,8 +315,23 @@ class Device(object):
          - key_name - key to press
          - strategy - strategy for closing the keyboard (e.g., `tapOutside`)
         """
-        self.driver.hide_keyboard(key_name, key, strategy)
-
+        if self.isAndroid():
+            self.driver.hide_keyboard(key_name, key, strategy)
+        if self.isIos():
+            if self.isWeb():
+                sleep(2)
+                self.switchToNative()
+                sleep(2)
+                try:
+                    self.driver.find_element(MobileBy.ACCESSIBILITY_ID, 'Done').click()
+                except:
+                    try:
+                        self.driver.find_element(MobileBy.ACCESSIBILITY_ID, 'Hide keyboard').click()
+                    except:
+                        pass
+                self.switchToWebview()
+            else:
+                self.driver.hide_keyboard(key_name="Done")
     def tapDeleteKey(self):
         if self.isIos():
             self.driver.find_element_by_id('delete').click()
@@ -363,6 +381,18 @@ class Device(object):
 
         return (self.height, self.width)
 
+    def hasWebView(self):
+        """
+        :return: boolean value if the current target has webview context
+        """
+        try:
+            for context in self.driver.contexts:
+                if (context.lower().find("web") > -1) or (context.lower().find("chromium") > -1):
+                    return True
+                else:
+                    return False
+        except:
+            return False
     def switchToNative(self):
         if self.isCurrentContextNative():
             pass

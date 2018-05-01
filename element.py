@@ -129,10 +129,10 @@ class Element(object):
         Performs tap action on the element
         """
         if self.device.isMobile():
-            if self.device.isChromium():
-                self.ui_object.click()
-            else:
+            if self.device.isSafari():
                 self.tapByLocation()
+            else:
+                self.ui_object.click()
         else:
             #Due to issue with clicking and double texts in textfield on IE, for clicking, this is a work-around.
             if self.device.isInternetExplorer():
@@ -141,17 +141,14 @@ class Element(object):
                 self.ui_object.click()
 
     def tapByLocation(self):
-        """
-        Performs tap action on the element for hybrid apps
-        """
         location = self.ui_object.location
         size = self.ui_object.size
 
-        # Determine if we need to take into account the browser header of mobile web
-        if self.device.isMobile():
+        if self.device.isHybrid():
+            # This is a hybrid app that needs special handling of the webview within the app
             self.device.switchToNative()
             if self.device.isIos():
-                #Assuming this is a placeholder for the URL Header Bar on iOS
+                # Assuming this is a placeholder for the URL Header Bar on iOS
                 urlHeaderBar = self.driver.find_element(MobileBy.CLASS_NAME, 'UIAButton')
                 urlHeaderBarSize = urlHeaderBar.size
                 location['y'] = urlHeaderBarSize['height'] + location['y'] + size['height']/2
@@ -162,8 +159,8 @@ class Element(object):
                 location['y'] = webViewLocation['y'] + location['y'] + size['height']/2
                 location['x'] = webViewLocation['x'] + location['x'] + size['width']/2
             self.device.switchToWebview()
+
         else:
-            #This is simply native app wrapper
             location['x'] = location['x'] + size['width']/2
             location['y'] = location['y'] + size['height']/2
         if location['x'] < 0 or location['y'] < 0:
