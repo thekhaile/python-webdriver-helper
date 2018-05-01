@@ -123,6 +123,18 @@ class Element(object):
             return self.ui_object.text
         else:
             return self.ui_object.get_attribute('label')
+
+    def isEnabled(self):
+        """
+        :return: boolean whether or not the element is enabled
+        """
+        return self.ui_object.is_enabled()
+
+    def isDisplayed(self):
+        """
+        :return: boolean whether or not the element is enabled
+        """
+        return self.ui_object.is_displayed()
         
     def tap(self):
         """
@@ -193,11 +205,6 @@ class Button(Element):
     def __init__(self, ui_obj, webdriver):
         Element.__init__(self, ui_object=ui_obj, driver=webdriver)
 
-    def isEnabled(self):
-        """
-        :return: boolean whether or not the element is enabled
-        """
-        return self.ui_object.is_enabled()
 
 class Picker(Element):
     def __init__(self, ui_obj, webdriver):
@@ -293,12 +300,6 @@ class CheckBox(Element):
     def __init__(self, ui_obj, webdriver):
         Element.__init__(self, ui_object=ui_obj, driver=webdriver)
 
-    def isEnabled(self):
-        """
-        :return: boolean whether or not the element is enabled
-        """
-        return self.ui_object.is_enabled()
-
     def isChecked(self):
         """
         :return: boolean whether or not the checkbox is checked
@@ -335,13 +336,6 @@ class Switch(Element):
     def __init__(self, ui_obj, webdriver):
         Element.__init__(self, ui_object=ui_obj, driver=webdriver)
 
-    def isEnabled(self):
-        """
-        :return: boolean whether or not the element is enabled
-        """
-
-        return self.ui_object.is_enabled()
-
     def isOn(self):
         """
         :return: boolean whether or not the Switch is on
@@ -366,11 +360,6 @@ class RadioButton(Element):
     def __init__(self, ui_obj, webdriver):
         Element.__init__(self, ui_object=ui_obj, driver=webdriver)
 
-    def isEnabled(self):
-        """
-        :return: boolean whether or not the element is enabled
-        """
-        return self.ui_object.is_enabled()
 
     def isSelected(self):
         """
