@@ -194,6 +194,33 @@ class Element(object):
 
         self.action.long_press(x=coordinates['x'], y=coordinates['y']).perform()
 
+    def findElement(self, strategy, value):
+        """
+
+        :param strategy: method such as ID, Class name, or xpath, etc...
+        :param value: the search value that goes with the strategy
+        :return: a web object
+        """
+        try:
+            element = self.ui_object.find_element(strategy, value)
+            return element
+        except:
+            return None
+
+    def findElements(self, strategy, value):
+        """
+
+        :param strategy: method such as ID, Class name, or xpath, etc...
+        :param value: the search value that goes with the strategy
+        :return: a list of web objects
+        """
+        elements = []
+        try:
+            elements = self.ui_object.find_elements(strategy, value)
+            return elements
+        except:
+            return elements
+
 class Button(Element):
     """
     This class is for the UI Element whose type is UIAButton for iOS and
