@@ -289,7 +289,7 @@ class Device(object):
         """
         Scrolls to an element that is out of view.
         :args:
-        - element - the element to scroll to
+        - element - the selenium web element to scroll to
         """
         if self.isWeb():
             actions = ActionChains(self.driver)
