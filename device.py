@@ -4,6 +4,7 @@ from time import sleep
 from appium.webdriver.common.touch_action import TouchAction
 from selenium.webdriver.common.by import By
 from appium.webdriver.common.mobileby import MobileBy
+from selenium.webdriver.common.action_chains import ActionChains
 
 class Device(object):
     def __init__(self , driver=None):
@@ -284,6 +285,15 @@ class Device(object):
         """
         self.driver.scroll(origin_el, destination_el)
 
+    def scrollToElement(self, element):
+        """
+        Scrolls to an element that is out of view.
+        :args:
+        - element - the selenium web element to scroll to
+        """
+        if self.isWeb():
+            actions = ActionChains(self.driver)
+            actions.move_to_element(element).perform()
 
     def getCurrentOrientation(self):
         """
